@@ -1,0 +1,29 @@
+.content__wrapper{
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem;
+    gap: .5rem;
+    max-height: 100vh;
+    overflow: auto;
+}
+
+.empty_text{
+    animation: slidein 1s linear forwards .5s;
+    opacity: 0;
+}
+
+@keyframes slidedown {
+    0% {
+        transform: translateY(-50%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0%);
+        opacity: 1;
+    }
+}
+
+.error_msg{
+    opacity: 0;
+    animation: slidedown .5s linear forwards 1s;
+}
