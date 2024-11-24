@@ -11,19 +11,3 @@
     animation: slidein 1s linear forwards .5s;
     opacity: 0;
 }
-
-@keyframes slidedown {
-    0% {
-        transform: translateY(-50%);
-        opacity: 0;
-    }
-    100% {
-        transform: translateY(0%);
-        opacity: 1;
-    }
-}
-
-.error_msg{
-    opacity: 0;
-    animation: slidedown .5s linear forwards 1s;
-}

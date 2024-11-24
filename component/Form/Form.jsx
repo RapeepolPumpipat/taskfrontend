@@ -1,7 +1,7 @@
 import './Form.css'
 import { IoLogoBuffer } from "react-icons/io5";
 import axios from 'axios'
-export default function Sidebar({ setTodos, setErrMsg }) {
+export default function Sidebar({ setTodos, showBanner }) {
 
     const sentData = (e)=> {
         e.preventDefault();
@@ -11,19 +11,14 @@ export default function Sidebar({ setTodos, setErrMsg }) {
             finish: e.target.finish.value,
             msg: e.target.detail.value,
         }
-        console.log(formData)
         axios.post('http://localhost:3000/todos', formData)
         .then(response => response.data)
         .then(data => {
-            console.log(data);
-            setTodos(data);
-            setErrMsg({ msg: '' });
-
+            setTodos(data.todos);
+            showBanner({ variant: "success", msg: data.msg });
         })
         .catch(err => {
-            console.log(err);
-            setErrMsg(err.response.data.msg);
-            setErrMsg({ msg: err.response.data.msg });
+            showBanner({ variant: "error", msg: err.response.data.msg });
         });
     }
 
@@ -43,7 +38,7 @@ export default function Sidebar({ setTodos, setErrMsg }) {
                 <label htmlFor="detail" className='text-lg'>Do you what to add more detail ?</label>
                 <textarea name='detail' id='detail' className='form-textarea text-black rounded-md' placeholder='Purchase supermarket including milk, egg and rice.' rows={5} autoComplete='off'></textarea>
  
-                <button type="submit" className='bg-indigo-500 text-white hover:bg-indigo-700 hover:-translate-y-1 hover:scale-105 transition-all delay:100 active:scale-100 active:translate-y-0.5 text-black p-3 rounded-md'>Submit</button>
+                <button type="submit" className='bg-indigo-500 text-white hover:bg-indigo-700 hover:-translate-y-1 active:scale-100 hover:scale-105 transition-all delay:100 active:scale-100 active:translate-y-0.5 text-black p-3 rounded-md'>Submit</button>
             </form>
         </nav>
     )

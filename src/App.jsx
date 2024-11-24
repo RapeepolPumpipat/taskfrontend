@@ -6,8 +6,17 @@ import axios from 'axios'
 
 function App() {
 
-  const [errMsg, setErrMsg] = useState({ msg: '' });
   const [todos, setTodos] = useState([]);
+  const [banner, setBanner] = useState({ variant: "", msg: "", show: false });
+
+  const hideBanner = () => {
+    setBanner({ ...banner, show: false });
+  }
+
+  const showBanner = ({ variant, msg }) => {
+    setBanner({ variant, msg, show: true });
+    setTimeout(() => hideBanner(), 1500);
+  }
 
   useEffect(() => {
       const fetchData  = async () => {
@@ -15,12 +24,12 @@ function App() {
               const response = await axios.get('http://localhost:3000/todos')
               if (!response.status === 200) {
                   throw new Error(
-                      'Can not get data.'
+                    'Can not get data.'
                   )
               }
               setTodos(response.data);
           } catch(e) {
-            setErrMsg({...errMsg, msg: e.message })
+            showBanner({ variant: "error", msg: e.message })
           }
       }
       fetchData();
@@ -28,8 +37,8 @@ function App() {
 
   return (
     <main id='page__wraper' className='bg-slate-100'>
-      <Form setTodos={setTodos} setErrMsg={setErrMsg}/>
-      <Content todos={todos} setTodos={setTodos} errMsg={errMsg}/>
+      <Form setTodos={setTodos} showBanner={showBanner}/>
+      <Content todos={todos} setTodos={setTodos} banner={banner} showBanner={showBanner}/>
     </main>
   )
 }
